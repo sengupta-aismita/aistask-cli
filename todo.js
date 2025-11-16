@@ -1,7 +1,9 @@
 
-const { log } = require('console');
 const fs = require('fs')
 const filePath = "./tasks.json";
+const chalk =  require("chalk");
+
+console.log(chalk.blue.bold("\n AisTask-CLI \n"));
 
 const loadTasks = ()=>{
     try{
@@ -22,7 +24,7 @@ const addTask = (task)=>{
     const tasks = loadTasks()
     tasks.push({task});
     saveTasks(tasks);
-    console.log("Task added", task);
+    console.log(chalk.green("Task added!", task));
     
 }
 
@@ -39,7 +41,7 @@ const removeTask = (index) =>{
     const deletedtask = tasks.splice(index,1)[0];
     
     saveTasks(tasks);
-    console.log(`Task deleted at index ${index} -- ${deletedtask.task}`);
+    console.log(chalk.yellow(`Task deleted at index ${index} -- ${deletedtask.task}`));
     
 }
 
@@ -48,10 +50,11 @@ const argument = process.argv[3]
 if(command === 'add'){
     addTask(argument)
 }else if(command === 'list'){
+    console.log(chalk.cyan("\nYour Tasks:\n"));
     listTasks()
 }else if(command === 'remove'){
     removeTask(parseInt(argument))
 }else{
-    console.log("Command not found");
+    console.log(chalk.red("Command not found"));
     
 }
